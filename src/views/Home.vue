@@ -1,39 +1,42 @@
 <template>
-  <div class="home" style="background-color: hsl(0, 0%, 95%);padding-bottom:100%">
+  <div class="home" style="background-color: hsl(0, 0%,95%);padding-bottom:100%">
     <img alt="Iwing logo"  src="../assets/iwing.png" style="margin-top:50px;" />
-    <!--<HelloWorld msg="Welcome to Your Vue.js App" />
+    <!--<HelloWorld msg="Welcome to Your Vue.js App" />font-weight:bold
     
     -->
-    <h1 style="font-size: 24px;font-family:sans-serif;font-weight:bold;">Handheld LoRa Survey & Sniffing Kits</h1>
+    <h1 style="font-size: 30px;font-family:sans-serif;">Handheld LoRa Survey & Sniffing Kits</h1>
     <br>
-    <div style="background-color: hsl(0, 0%, 90%);padding-top:10px;padding-bottom:10px;margin-left:50px;margin-right:50px;">
+    <div style="background-color: hsl(210, 76%, 22%);padding-right:0px;padding-left:0px;padding-top:10px;padding-bottom:10px;margin-left:33px;margin-right:33px;">
     <nav class="level" >
       <div class="level-item has-text-centered">
+
         <div>
-          <p class="heading">Frequency (Hz)</p>
+          <p style="color:white" class="heading">Frequency (MHz) </p><h5 style="color:red">{{cur_frequency}}</h5>
           <div class="select">
-            <select>
-              <option>433E6</option>
-              <option>169E6</option>
-              <option>434E6</option>
-              <option>866E6</option>
-              <option>868E6</option>
-              <option>915E6</option>
+            <select  v-model="cur_frequency" @change="onFreChange($event)">
+              <option>433</option>
+              <option>169</option>
+              <option>434</option>
+              <option>866</option>
+              <option>868</option>
+              <option>915</option>
             </select>
           </div>
+
+          
         </div>
       
      
         <div style="margin-left:50px">
-          <p class="heading">Bandwidth (Hz)</p>
+          <p style="color:white" class="heading">Bandwidth (KHz)</p><h5 style="color:red">{{cur_bandwidth}}</h5>
           <div class="select">
-            <select>
-              <option>125E3</option>
-              <option>250E3</option>
-              <option>20.8E3</option>
-              <option>7.8E3</option>
-              <option>15.6E3</option>
-              <option>31.25E3</option>
+            <select  v-model="cur_bandwidth" @change="onBWChange($event)">
+              <option>125</option>
+              <option>250</option>
+              <option>20.8</option>
+              <option>7.8</option>
+              <option>15.6</option>
+              <option>31.25</option>
             </select>
           </div>
       
@@ -44,9 +47,9 @@
       <nav class="level">
       <div class="level-item has-text-centered">
         <div>
-          <p class="heading">Spreading factor</p>
+          <p style="color:white" class="heading">Spreading factor</p><h5 style="color:red">{{cur_sf}}</h5>
           <div class="select">
-            <select>
+            <select  v-model="cur_sf" @change="onSFChange($event)">
               <option>7</option>
               <option>8</option>
               <option>9</option>
@@ -58,9 +61,9 @@
         </div>
       
         <div style="margin-left:40px">
-          <p class="heading">Coding rate</p>
+          <p style="color:white" class="heading">Coding rate</p><h5 style="color:red">{{cur_cr}}</h5>
           <div class="select">
-            <select>
+            <select  v-model="cur_cr" @change="onCRChange($event)">
               <option>5</option>
               <option>1</option>
               <option>2</option>
@@ -69,89 +72,133 @@
             </select>
           </div>
         </div>
-      </div>
+      
+	  
+<div style="margin-left:40px">
+          <p style="color:white" class="heading">time interval (Sec)</p><h5 style="color:red">{{time_interval}}</h5>
+          <div class="select">
+            <select  v-model="time_interval" @change="onTIChange($event)">
+              <option>0</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3.5</option>
+              <option>3</option>
+			  <option>4</option>
+            </select>
+          </div>
+        </div>
+      
+    </div>
+
+
     </nav>
     </div>
 
 
     <!-- lora info -->
-    <div class="allSniffing">
-      <div class="box" style="margin-top:20px;margin-bottom:20px;margin-left:20px;margin-right:20px">
-        <article class="media">
-          <div class="media-left">
-            <figure class="image is-64x64">
-              <img src="../assets/lora.png">
-            </figure>
-          </div>
-          <div class="media-content">
-            <div class="content">
-              <p>
-                <strong>MAC address:</strong> <small>f8:32:e4:f1:92:a3</small> 
-                <br>
-                <strong>protocol:</strong> <small></small>
-                <br>
-                <strong>payload:</strong> <small>{{info}}</small>
-                <br>
-                <strong>gps:</strong> <small>13.7660202,100.4526961,12z</small>
-              </p>
-            </div>
-          </div>
-        </article>
-      </div>
-
-            <div class="box" style="margin-top:20px;margin-bottom:20px;margin-left:20px;margin-right:20px">
-        <article class="media">
-          <div class="media-left">
-            <figure class="image is-64x64">
-              <img src="../assets/lora.png">
-            </figure>
-          </div>
-          <div class="media-content">
-            <div class="content">
-              <p>
-                <strong>MAC address:</strong> <small>a4:32:e4:f1:92:a3</small> 
-                <br>
-                <strong>protocol:</strong> <small></small>
-                <br>
-                <strong>payload:</strong> <small>{{info}}</small>
-                <br>
-                <strong>gps:</strong> <small>13.7660202,100.4526961,12z</small>
-              </p>
-            </div>
-          </div>
-        </article>
-      </div>
-
-            <div class="box" style="margin-top:20px;margin-bottom:20px;margin-left:20px;margin-right:20px">
-        <article class="media">
-          <div class="media-left">
-            <figure class="image is-64x64">
-              <img src="../assets/lora.png">
-            </figure>
-          </div>
-          <div class="media-content">
-            <div class="content">
-              <p>
-                <strong>MAC address:</strong> <small>b4:a5:e4:f1:92:a3</small> 
-                <br>
-                <strong>protocol:</strong> <small></small>
-                <br>
-                <strong>payload:</strong> <small>{{info}}</small>
-                <br>
-                <strong>gps:</strong> <small>13.7660202,100.4526961,12z</small>
-              </p>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-    <!-- lora info -->
-
-
-    <div id="result" style="color: SlateBlue; font-size: 200%; font-family: Monaco, monospace; margin: 20px">
-      {{info}}
-    </div>
     
+<!--
+	 <h3 v-html="arrayJsonLoRa" id="resul3" style="color: green; font-size: 200%; font-family: Monaco, monospace; margin: 20px">
+      {{arrayJsonLoRa}}
+    </h3>
+
+	 <h3 v-html="arrayOtherLoRa" id="resul3" style="color: green; font-size: 200%; font-family: Monaco, monospace; margin: 20px">
+      {{arrayOtherLoRa}}
+    </h3> 
+	
+	
+	v-on="click : clickHandler"
+
+	
+-->
+	
+		<button  v-for="lora in arrayJsonLoRa" v-bind:key="lora.macAddr"  style="width:95%;padding-top:0%;padding-bottom:0%;padding-left:0%;padding-right:0%;margin-top:20px;margin-bottom:0px;margin-left:20px;margin-right:20px" >
+      <div class="box" style="background-color: hsl(156, 59%,60%);padding-top:15px;padding-bottom:15px;padding-left:0%;padding-right:0%;">
+        <article class="media">
+          <div class="media-left">
+            <figure class="image is-128x128">
+              <img src="../assets/lora.png">
+            </figure>
+          </div>
+          <div class="media-content">
+            <div class="content" style="font-size: 18px;">
+              <p>
+			  	
+				<strong>updated time:</strong> <small style="font-size: 20px;" >{{lora.timeUpdate}}</small> 
+                <br>
+				<strong>format:</strong> <small style="font-size: 20px;">{{lora.format}}</small> 
+				<br>
+                <strong>mac address:</strong> <small style="font-size: 20px;">{{lora.macAddr}}</small> 
+                <br>
+                <strong>data:</strong> <small style="font-size: 20px;">{{lora.data}}</small>
+                <br>
+                <strong>rssi:</strong> <small style="font-size: 20px;">{{lora.rssi}}</small>
+                <br>
+				<strong>snr:</strong> <small style="font-size: 20px;">{{lora.snr}}</small>
+                <br>
+                <strong>gps:</strong> <small style="font-size: 20px;">{{lora.gps}}</small>
+			
+              </p>
+            </div>
+          	</div>
+        	</article> 
+     		</div>
+		</button>
+
+		<button v-for="lora in arrayOtherLoRa" v-bind:key="lora.macAddr" style="width:95%;padding-top:0%;padding-bottom:0%;padding-left:0%;padding-right:0%;margin-top:20px;margin-bottom:0px;margin-left:20px;margin-right:20px" >
+        <div class="box" style="background-color: hsl(41, 80%,60%);padding-top:15px;padding-bottom:15px;padding-left:0%;padding-right:0%;">
+        <article class="media">
+          <div class="media-left">
+            <figure class="image is-128x128">
+              <img src="../assets/lora.png">
+            </figure>
+          </div>
+          <div class="media-content" style="font-size: 18px;">
+            <div class="content">
+              <p>
+			  
+			  	<strong>updated time:</strong> <small style="font-size: 20px;">{{lora.timeUpdate}}</small> 
+                <br>
+                <strong>format:</strong> <small style="font-size: 20px;"> {{lora.format}}</small>
+                <br>
+                <strong>data:</strong> <small style="font-size: 20px;">{{lora.data}}</small>
+                <br>
+				<strong>rssi:</strong> <small style="font-size: 20px;">{{lora.rssi}}</small>
+                <br>
+				<strong>snr:</strong> <small style="font-size: 20px;">{{lora.snr}}</small>
+                <br>
+                <strong>gps:</strong> <small style="font-size: 20px;">{{lora.gps}}</small>
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+	</button>
+
+	<h3 v-html="info" id="result" style="color: SlateBlue; font-size: 200%; font-family: Monaco, monospace; margin: 20px">
+      {{info}} <br>
+    </h3>
+
+    <h3 v-html="in_gps" id="result2" style="color: red; font-size: 200%; font-family: Monaco, monospace; margin: 20px">
+      {{in_gps}}
+    </h3>
+
+    <h3 v-html="input" id="resul3" style="color: green; font-size: 200%; font-family: Monaco, monospace; margin: 20px">
+      {{input}}<br>
+    </h3>
+
+	<h3 v-html="arrayJsonMac" id="resul3" style="color: green; font-size: 200%; font-family: Monaco, monospace; margin: 20px">
+      {{arrayJsonMac}}<br>
+    </h3>
+	<h3 v-html="arrayJsonLoRa" id="resul3" style="color: green; font-size: 200%; font-family: Monaco, monospace; margin: 20px">
+      {{arrayJsonLoRa}}<br>
+    </h3>
+	<h3 v-html="arrayOtherMac" id="resul3" style="color:orange; font-size: 200%; font-family: Monaco, monospace; margin: 20px">
+      {{arrayOtherMac}}<br>
+    </h3>
+	<h3 v-html="arrayOtherLoRa" id="resul3" style="color: orange; font-size: 200%; font-family: Monaco, monospace; margin: 20px">
+      {{arrayOtherLoRa}}<br>
+    </h3>
 
   </div>
 </template>
@@ -163,53 +210,218 @@
 // import LoraInfos from './components/loraInfo.vue';
 import axios from 'axios';
 
-// export default {
-//   name: "home" ,
-//   data () {
-//     return {
-//       info: 'loading....'
-//     }
-//   }
-// };
-
 export default {
   name: "home",
   data () {
     return {
-      info: 'loading...'
+      arrayJsonLoRa:[],
+	  arrayOtherLoRa:[],
+	  arrayJsonMac: [],
+	  arrayOtherMac: [],
+      info: 'loading...',
+      in_gps: 'gps loading...',
+      input: 'hello',
+      cur_frequency: 433,
+      cur_sf: 7,
+      cur_cr: 5,
+      cur_bandwidth:125,
+	  time_interval:3.5
     }
-},
-mounted () {
-    console.log('hello')
-    // https://192.168.4.1/lora
-    // https://api.coindesk.com/v1/bpi/currentprice.json
-    // if(this.info === null){
-    //   this.info = 'loading.....'
-    // }
-    // setTimeout(()=>{
-      axios
-      .get('http://192.168.4.1/lora').then(res=>{
-        console.log(res)
-        // if(this.info === 'loading.....'){
-        //   this.info = ''
+  },
+  mounted () {
+    var JsonStruct = 
+	{	macAddr: "",
+		format:"JSON",
+		data:"",
+		rssi:"",
+		gps:"",
+		snr:"",
+		timeUpdate:"" 
+	}
+	var OtherStruct = {
+		data:"",
+		rssi:"",
+		snr: "",
+		gps: "",
+		format: "OTHER",
+		timeUpdate:""
+	}
+    const self = this;
+    window.setInterval(async ()=>{ 
+		let currentDate = Date.now();
+		var _lora = await axios.get('http://192.168.4.1/lora').then((res)=>{
+			console.log(res.data)
+			console.log(res)
+			let input = JSON.parse(JSON.stringify(res.data))
+			self.info = input;
+			return input
+
+		})
+
+	  	//get gps data
+		var _gps = await axios.get('http://192.168.4.1/gps').then(res => res.data)
+		// {
+          	// console.log(res.data)
+			// // console.log("index that mac ="+ input.macAddr+"  is "+ index)
+          	// let input = JSON.parse(JSON.stringify(res.data))
+          	// self.gps = input.status
+					
+			// arrayJsonLoRa[index].gps= input.status;
         // }
-        this.info = res.data
+		// )
+		self.in_gps = _gps.status
+
+		console.log("_lora is ============= "+ _gps.status)
+
+      
+	  
+		if(_lora.payload['macAddr']!== undefined && self.arrayJsonLoRa.findIndex(obj => obj.macAddr === _lora.payload['macAddr'])>=0){
+			let index = self.arrayJsonLoRa.findIndex(obj => obj.macAddr === _lora.payload['macAddr'])
+			console.log("index that mac ="+ _lora.payload['macAddr']+"  is "+ index)
+			if(index>=0){
+				self.arrayJsonLoRa.splice(index,1)
+				self.arrayJsonLoRa.splice(0,0, {
+				macAddr:_lora.payload['macAddr'],
+				data:_lora.payload['data'],
+				rssi:_lora.rssi,
+				snr: _lora.snr,
+				gps: _gps.status,
+				format: "OTHER",
+				timeUpdate:currentDate
+				})
+			}
+			// else if(index===0){
+			// 	self.arrayJsonLoRa[index].data= _lora.payload['data']
+			// 	self.arrayJsonLoRa[index].rssi= _lora.rssi;
+			// 	self.arrayJsonLoRa[index].snr= _lora.snr;
+			// 	self.arrayJsonLoRa[index].gps= _gps.status; // have to adjust more a bit
+			// 	self.arrayJsonLoRa[index].timeUpdate= currentDate;
+			// }
+		}else if(_lora.payload['macAddr']!==undefined && self.arrayJsonLoRa.findIndex(obj => obj.macAddr === _lora.payload['macAddr'])<0){
+			self.arrayJsonMac.push(_lora.payload['macAddr'])
+			self.arrayJsonLoRa.splice(0,0, {
+				macAddr:_lora.payload['macAddr'],
+				data:_lora.payload['data'],
+				rssi:_lora.rssi,
+				snr: _lora.snr,
+				gps: _gps.status,
+				format: "JSON",
+				timeUpdate:currentDate
+			})
+			// self.arrayJsonLoRa.push({	macAddr: _lora.payload['macAddr'],
+			// 	format:"JSON",
+			// 	data:_lora.payload['data'],
+			// 	rssi:_lora.rssi,
+			// 	gps:_gps.status, // have to adjust more a bit,
+			// 	snr:_lora.snr,
+			// 	timeUpdate:currentDate 
+			// })
+
+		}else if(_lora.payload['macAddr']==undefined && self.arrayOtherLoRa.findIndex(obj => obj.macAddr === (_lora.payload).substring(16,21))>=0){ //other format
+			let index = self.arrayOtherLoRa.findIndex(obj => obj.macAddr === (_lora.payload).substring(16,21))
+			console.log("index that mac ="+ (_lora.payload).substring(16,21)+"  is "+ index)
+			if(index>=0){
+				self.arrayOtherLoRa.splice(index,1)
+				self.arrayOtherLoRa.splice(0,0, {
+				macAddr:(_lora.payload).substring(16,21),
+				data:_lora.payload,
+				rssi:_lora.rssi,
+				snr: _lora.snr,
+				gps: _gps.status,
+				format: "OTHER",
+				timeUpdate:currentDate
+				})
+				// self.arrayOtherLoRa.splice(index,1)
+			}
+			// else if(index===0){
+			// 	self.arrayOtherLoRa[index].data = _lora.payload;
+			// 	self.arrayOtherLoRa[index].rssi= _lora.rssi;
+			// 	self.arrayOtherLoRa[index].snr= _lora.snr;
+			// 	self.arrayOtherLoRa[index].gps= _gps.status; // have to adjust more a bit
+			// 	self.arrayOtherLoRa[index].timeUpdate= currentDate;
+			// }
+		}else if(_lora.payload['macAddr']==undefined && self.arrayOtherLoRa.findIndex(obj => obj.macAddr === (_lora.payload).substring(16,21))<0){
+			self.arrayOtherMac.push((_lora.payload).substring(16,21))
+			//insert to the first one
+			self.arrayOtherLoRa.splice(0,0, {
+				macAddr:(_lora.payload).substring(16,21),
+				data:_lora.payload,
+				rssi:_lora.rssi,
+				snr: _lora.snr,
+				gps: _gps.status,
+				format: "OTHER",
+				timeUpdate:currentDate
+			})
+			// self.arrayOtherLoRa.push( {
+			// 	macAddr:(_lora.payload).substring(16,21),
+			// 	data:_lora.payload,
+			// 	rssi:_lora.rssi,
+			// 	snr: _lora.snr,
+			// 	gps: _gps.status,
+			// 	format: "OTHER",
+			// 	timeUpdate:currentDate
+			// })
+		}
+		
+
+    },this.time_interval*1000)
+
+// get value just when starting
+    axios
+    .get('http://192.168.4.1/params')
+    .then(res => {
+      console.log(res.data)
+      self.cur_frequency= res.data.frequency;
+      self.cur_sf= res.data.sf;
+      self.cur_cr= res.data.coding_rate;
+      self.cur_bandwidth=(res.data.bw/1000);
+      this.input = res.data
+    })
+    
+
+      
+  },
+  methods: {
+	equalObjectValue:(element) => {element==_lora.payload.macAddr},
+    setParam:  (type,value) => {
+      axios.get('http://192.168.4.1/set/'+type+'/'+value,{'Access-Control-Allow-Origin':'*','content-type':'application/json'})
+      .then(res=>{
+        console.log(res.data)
+        this.input = res.data
       })
-    // },1000)
-    
-    
-    // axios
-    //   .get('http://192.168.4.1/lora').then(res=>{
-    //     console.log(res)
-    //     this.info = res.data
-    //   })
-      // .then(response => {
-        // this.info = response.data
-        // console.log(this.info)
-        // })
-      // .catch(err =>{
-        // console.log(err)
-      // })
+    },
+    onFreChange(event) {
+      axios.get('http://192.168.4.1/set/frequency/'+event.target.value,{'Access-Control-Allow-Origin':'*','content-type':'application/json'})
+      .then(res=>{
+        console.log(res.data)
+        this.input = res.data
+      })        
+    },
+    onBWChange(event) {
+      let bw = event.target.value*1000
+      axios.get('http://192.168.4.1/set/bandwidth/'+bw,{'Access-Control-Allow-Origin':'*','content-type':'application/json'})
+      .then(res=>{
+        console.log(res.data)
+        this.input = res.data
+      })        
+    },
+    onSFChange(event) {
+      axios.get('http://192.168.4.1/set/spreading_factor/'+event.target.value,{'Access-Control-Allow-Origin':'*','content-type':'application/json'})
+      .then(res=>{
+        console.log(res.data)
+        this.input = res.data
+      })        
+    },
+    onCRChange(event) {
+      axios.get('http://192.168.4.1/set/coding_rate/'+event.target.value,{'Access-Control-Allow-Origin':'*','content-type':'application/json'})
+      .then(res=>{
+        console.log(res.data)
+        this.input = res.data
+      })       
+    },
+	onTIChange(event){
+		this.time_interval =  event.target.value
+	}
   }
 
 }
