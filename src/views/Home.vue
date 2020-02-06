@@ -1,13 +1,12 @@
 <template>
   <div class="home" style="background-color: hsl(0, 0%,95%);padding-bottom:100%;">
-
-    <img alt="Iwing logo"  src="../assets/iwing.png" style="margin-top:50px;" />
+    <img alt="Iwing logo"  src="../assets/iwing.png" style="margin-top:20px;" />
     <!--<HelloWorld msg="Welcome to Your Vue.js App" />font-weight:bold
     
     -->
     <h1 style="font-size: 30px;font-family:sans-serif;">Handheld LoRa Survey & Sniffing Kits</h1>
     <br>
-    <div style="background-color: hsl(210, 76%, 22%);padding-right:0px;padding-left:0px;padding-top:10px;padding-bottom:15px;margin-left:33px;margin-right:33px;">
+    <div style="position:relative;background-color: hsl(210, 76%, 22%);padding-right:0px;padding-left:0px;padding-top:10px;padding-bottom:15px;margin-left:20px;margin-right:20px;">
     <nav class="level" >
       <div class="level-item has-text-centered">
         <div>
@@ -22,8 +21,6 @@
               <option>915</option>
             </select>
           </div>
-
-          
         </div>
       
      
@@ -39,13 +36,9 @@
               <option>31.25</option>
             </select>
           </div>
-      
         </div>
-      </div>
-      </nav>
 
-      <nav class="level">
-      <div class="level-item has-text-centered">
+        <div style="margin-left:50px">
         <div>
           <p style="color:white" class="heading">Spreading factor</p><h5 style="color:red">{{cur_sf}}</h5>
           <div class="select">
@@ -59,8 +52,15 @@
             </select>
           </div>
         </div>
+        </div>
+      </div>
+
+      </nav>
+      <nav class="level">
+      <div class="level-item has-text-centered">
+
       
-        <div style="margin-left:40px">
+        <div>
           <p style="color:white" class="heading">Coding rate</p><h5 style="color:red">{{cur_cr}}</h5>
           <div class="select">
             <select  v-model="cur_cr" @change="onCRChange($event)">
@@ -74,7 +74,7 @@
         </div>
       
 	  
-<div style="margin-left:40px">
+<div style="margin-left:50px">
           <p style="color:white" class="heading">time interval (Sec)</p><h5 style="color:red">{{time_interval}}</h5>
           <div class="select">
             <select  v-model="time_interval" @change="onTIChange($event)">
@@ -88,12 +88,19 @@
           </div>
         </div>
     </div>
-    <button @click="exportToCSV($event)" style="color:white;background:green;padding-top:5px;padding-bottom:5px;position: absolute;right:5%;font-size: 18px;margin-right:5px;margin-top:30px">Export to CSV</button>
-
-    </nav>
+            
+    <div>
+    <button @click="exportToCSV($event)" style="margin-right:10px;margin-left:0px;position:static;border-radius:15px;color:white;background:green;padding-top:5px;padding-bottom:5px;right:2%;top:63%;font-size:16px;margin-top:30px">Export to CSV</button>
     </div>
+    </nav>
 
+
+
+    </div>
 <!--
+        <button @click="exportToCSV($event)" style="position:absolute;border-radius:15px;color:white;background:green;padding-top:5px;padding-bottom:5px;right:2%;top:1%;font-size:18px;margin-right:5px;margin-top:30px">Export to CSV</button>
+
+
 		<button style="width:95%;padding-top:0%;padding-bottom:0%;padding-left:0%;padding-right:0%;margin-top:20px;margin-bottom:0px;margin-left:20px;margin-right:20px" >
       <div class="box" style="background-color: hsl(156, 59%,60%);padding-top:15px;padding-bottom:15px;padding-left:0%;padding-right:0%;">
         <article class="media">
@@ -164,20 +171,38 @@ padding-right:0px;padding-left:0px;padding-top:10px;padding-bottom:10px;margin-l
 <button v-for="lora in arrayOtherLoRa" v-bind:key="lora.macAddr" style="width:95%;padding-top:0%;padding-bottom:0%;padding-left:0%;padding-right:0%;margin-top:20px;margin-bottom:0px;margin-left:20px;margin-right:20px" >
         <div class="box" style="background-color: hsl(41, 80%,60%);padding-top:15px;padding-bottom:15px;padding-left:0%;padding-right:0%;">
 -->
-	
     <div  v-for="(lora,index) in arrayJsonLoRa" v-bind:key="lora.macAddr" class="box" style="
-      background-color: hsl(156, 59%,60%);padding-right:0px;padding-left:0px;padding-top:10px;
-      padding-bottom:5px;margin-left:33px;margin-right:33px;margin-top:20px;margin-bottom:0px;">
-        <article class="media">
+      background-color: hsl(156, 59%,60%);padding-right:0px;padding-left:0px;padding-top:0px;
+      padding-bottom:10px;margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:0px;">
+        <article class="media" style="position:relative">
           <div class="media-left">
-            <figure class="image is-128x128">
+            <figure style="width:128px;height:64px">
               <img src="../assets/lora.png">
             </figure>
+
+            <div  class="level-item has-text-centered" style="margin-top:20px">
+                <strong style="color:#330099;margin-right:20px">sound</strong><br>
+                <button @click="onClick($event,index,++count,lora.format)" style="border-radius:15px;background: white;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px">
+                    <img class="image is-32x32" v-bind:id="index" src="../assets/soundOff.png" style="border-radius:15px;background:white;" />
+                </button>
+              </div>
+             
+              <div  class="level-item has-text-centered" style="margin-top:20px">
+                <strong style="color:#330099;margin-right:5px">statistic</strong><br>
+                <button style="border-radius:15px;background-color:pink;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px">
+                    <img class="image is-32x32" src="../assets/analysis.png"/>
+                </button>
+              </div>
+            
 
           </div>
           
           <div class="media-body">
-            <div class="content" style="font-size: 18px;">
+
+          <nav class="level">
+        
+
+            <div class="content" style="margin-right:80px;font-size: 18px;">
             
               <p>
 			  	
@@ -198,35 +223,53 @@ padding-right:0px;padding-left:0px;padding-top:10px;padding-bottom:10px;margin-l
               </p>
             </div>
 
-          	</div>
-            <div class="media-right" style="position: absolute;right:5%;font-size: 18px;margin-right:5px;margin-top:5px">
-              <div>
-                <strong style="margin-right:20px">sound:</strong><br>
-                <button @click="onClick($event,index,++count,lora.format)" style="background: white;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px">
-                    <img class="image is-64x64" v-bind:id="index" src="../assets/soundOff.png" style="background:white;" />
+             <div class="media-right">
+                <button @click="deleteInfo($event,index,lora.format)" style="margin-right:0px;margin-left:0px;margin-top:0px;position:absolute;right:0;top:0;border-radius:50%;background: white;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px">
+                  <img class="image is-24x24" v-bind:id="index" src="../assets/cancel.png" style="border-radius:50%;background:white;" />
                 </button>
-              </div>
-              <div style="margin-top:0px">
-                <strong style="margin-right:5px">statistic:</strong><br>
-                <button style="background-color: blue;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px">
-                    <img class="image is-64x64" src="../assets/analysis.png"/>
-                </button>
-              </div>
             </div>
+            </nav>
+
+          	</div>
+            
+                
+             
+              
 
         	</article> 
      		</div>
 
 		 <div  v-for="(lora,index) in arrayOtherLoRa" v-bind:key="lora.macAddr" class="box" style="
-      background-color: hsl(41, 80%,60%);padding-right:0px;padding-left:0px;padding-top:10px;
-      padding-bottom:30px;margin-left:33px;margin-right:33px;margin-top:20px;margin-bottom:0px;">
-        <article class="media">
+      background-color: hsl(41, 80%,60%);padding-right:0px;padding-left:0px;padding-top:0px;
+      padding-bottom:10px;margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:0px;">
+        <article class="media" style="position:relative">
           <div class="media-left">
-            <figure class="image is-128x128">
+            <figure style="width:128px;height:64px">
               <img src="../assets/lora.png">
             </figure>
+
+              <div  class="level-item has-text-centered" style="margin-top:20px">
+                <strong style="color:#330099;margin-right:20px">sound</strong><br>
+                <button @click="onClick($event,index,++count,lora.format)" style="border-radius:15px;background: white;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px">
+                    <img class="image is-32x32" v-bind:id="index" src="../assets/soundOff.png" style="border-radius:15px;background:white;" />
+                </button>
+              </div>
+             
+              <div  class="level-item has-text-centered" style="margin-top:20px">
+                <strong style="color:#330099;margin-right:5px">statistic</strong><br>
+                <button style="border-radius:15px;background-color:pink;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px">
+                    <img class="image is-32x32" src="../assets/analysis.png"/>
+                </button>
+              </div>
+            
+
+
+
+
           </div>
           <div class="media-body" style="font-size: 18px;">
+            <nav class="level">
+
             <div class="content">
               <p>
 			  
@@ -243,24 +286,19 @@ padding-right:0px;padding-left:0px;padding-top:10px;padding-bottom:10px;margin-l
                 <strong>gps:</strong> <small style="font-size: 20px;">{{lora.gps}}</small>
               </p>
             </div>
+
+              <div class="media-right">
+                <button @click="deleteInfo($event,index,lora.format)" style="margin-right:0px;margin-left:0px;margin-top:0px;position:absolute;right:0;top:0;border-radius:50%;background: white;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px">
+                  <img class="image is-24x24" v-bind:id="index" src="../assets/cancel.png" style="border-radius:50%;background:white;" />
+                </button>
+            </div>
+            </nav>
           </div>
 
-           <div class="media-right" style="position: absolute;right:5%;font-size: 18px;margin-right:5px;margin-top:0px">
-              <div>
-              <strong style="margin-right:20px">sound:</strong><br>
-                <button @click="onClick($event,index,++count,lora.format)" style="background: white;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px">
-                    <img class="image is-64x64" v-bind:id="index" src="../assets/soundOff.png" style="background:white;" />
-                </button>
-              </div>
-              <div style="margin-top:0px">
-                <strong style="margin-right:5px">statistic:</strong><br>
-                <button style="background-color: blue;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px">
-                    <img class="image is-64x64" src="../assets/analysis.png"/>
-                </button>
-              </div>
-            </div>
+           
+          
 
-
+           
         </article>
       </div>
 
@@ -292,7 +330,6 @@ padding-right:0px;padding-left:0px;padding-top:10px;padding-bottom:10px;margin-l
     <h3 v-html="arraylog" id="resul3" style="color: orange; font-size: 200%; font-family: Monaco, monospace; margin: 20px">
       {{arraylog}}<br>
     </h3>
-
   </div>
 </template>
 
@@ -570,6 +607,13 @@ export default {
       });
       let encodedUri = encodeURI(csvContent);
       window.open(encodedUri);
+    },
+    deleteInfo(event,index,format){
+      // format==='JSON'?this.arrayJsonLoRa.splice(index,1):this.arrayOtherLoRa.splice(index,1);
+      if(format==='JSON'){
+        this.arrayJsonLoRa.splice(index,1);
+      }else this.arrayOtherLoRa.splice(index,1);
+
     }
   }
 
